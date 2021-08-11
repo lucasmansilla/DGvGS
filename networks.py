@@ -24,7 +24,7 @@ class AlexNet(torch.nn.Module):
             grads.append(p.grad.data.clone().flatten())
         return torch.cat(grads)
 
-    def update_grads(self, new_grads):
+    def set_grads(self, new_grads):
         start = 0
         for k, p in enumerate(self.network.parameters()):
             dims = p.shape
