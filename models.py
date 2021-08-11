@@ -206,7 +206,7 @@ class ModelGS(ModelDA):
         train_acc /= len(train_batches)
 
         new_grads = self.grad_fn(domain_grads)  # Modify gradients according to grad_fn
-        self.network.set_grads(new_grads)    # Update gradients
+        self.network.set_grads(new_grads)       # Update gradients
         self.optimizer.step()                   # Update model parameters
 
         return train_loss, train_acc
