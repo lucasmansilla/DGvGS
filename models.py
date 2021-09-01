@@ -183,7 +183,7 @@ class ModelGS(ModelDA):
         train_loss, train_acc = 0.0, 0.0
         domain_grads = []
 
-        self.network.train()
+        self.network.train(is_train)
         self.optimizer.zero_grad()
 
         with torch.set_grad_enabled(is_train):
