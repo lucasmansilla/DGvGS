@@ -1,6 +1,8 @@
 # Domain Generalization via Gradient Surgery
 This repository contains the source code corresponding to the paper "Domain Generalization via Gradient Surgery" (Accepted for publication at ICCV 2021). To learn more about our work, please visit this link: https://arxiv.org/abs/2108.01621
 
+<p align="center"><img width="550" src="images/gs_sketch.png"></p>
+
 ## Instructions
 This project uses Python 3.6.9 and PyTorch 1.8.1.
 ### Data:
