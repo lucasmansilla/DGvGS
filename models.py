@@ -29,7 +29,8 @@ class ModelDA:
             weight_decay=args.weight_decay)
         self._create_dataloaders(dataset, args)
         self.stats = {'loss': {'train': [], 'val': [], 'test': []},
-                      'acc':  {'train': [], 'val': [], 'test': []}}
+                      'acc':  {'train': [], 'val': [], 'test': []},
+                      'time': {'train': []}}
 
     def _create_dataloaders(self, dataset, args):
 
@@ -63,17 +64,17 @@ class ModelDA:
         train_iterator = zip(*self.train_loaders)
         iterations = self.args.iterations
         val_every = self.args.val_every
-        run_train_loss, run_train_acc = 0.0, 0.0
+        run_train_time, run_train_loss, run_train_acc = 0.0, 0.0, 0.0
         max_val_acc = -1
 
         for it in range(iterations):
-            train_it_time = time.time()
+            train_time = time.time()
 
             # Training
             train_batches = [self._prepare_batch(batch) for batch in next(train_iterator)]
             train_loss, train_acc = self._train_step(train_batches)
 
-            train_it_time = time.time() - train_it_time
+            run_train_time += (time.time() - train_time)
             run_train_loss += train_loss
             run_train_acc += train_acc
 
@@ -87,11 +88,13 @@ class ModelDA:
                     torch.save(self.network.state_dict(), self.args.output_dir + '/best_model.pt')
 
                 if (it+1) % val_every == 0:
+                    run_train_time /= val_every
                     run_train_loss /= val_every
                     run_train_acc /= val_every
                 elif it == (iterations-1):
                     n_steps = iterations
                     n_steps -= n_steps//val_every * val_every
+                    run_train_time /= n_steps
                     run_train_loss /= n_steps
                     run_train_acc /= n_steps
 
@@ -99,6 +102,7 @@ class ModelDA:
                 self.stats['acc']['train'].append(run_train_acc)
                 self.stats['loss']['val'].append(val_loss)
                 self.stats['acc']['val'].append(val_acc)
+                self.stats['time']['train'].append(run_train_time)
 
                 # Print stats
                 print(f'\titer {it+1:>5}/{iterations}: '
@@ -106,9 +110,9 @@ class ModelDA:
                       f'train acc: {run_train_acc:.5f} | '
                       f'val loss: {val_loss:.5f}, '
                       f'val acc: {val_acc:.5f} | '
-                      f'iter time (sec): {train_it_time:.5f}')
+                      f'iter time: {run_train_time:.5f}')
 
-                run_train_loss, run_train_acc = 0.0, 0.0
+                run_train_time, run_train_loss, run_train_acc = 0.0, 0.0, 0.0
 
     def _train_step(self, train_batches):
         is_train = True
