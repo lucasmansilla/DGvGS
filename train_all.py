@@ -34,6 +34,9 @@ if __name__ == "__main__":
             train_args['seed'] = utils.seed_generator(args.dataset, args.method, test_idx, trial_i)
             train_args['iterations'] = args.iterations
             train_args['val_every'] = args.val_every
+            train_args['batch_size'] = args.batch_size
+            train_args['lr'] = args.lr
+            train_args['weight_decay'] = args.weight_decay
             train_args['test_dom_idx'] = test_idx
             train_args['output_dir'] = os.path.join(
                 output_dir, f'run_{trial_i}/{domains[test_idx]}')

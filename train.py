@@ -48,7 +48,7 @@ if __name__ == "__main__":
 
     train_stats = model.get_train_stats()
     test_acc, test_loss = train_stats['acc']['test'], train_stats['loss']['test']
-    print(f'\ttest loss: {test_loss:.5f}, test acc: {test_acc:.2f}%')
+    print(f'\ttest loss: {test_loss:.5f}, test acc: {test_acc:.5f}')
 
     print('Saving training stats', end=' ', flush=True)
     utils.save_train_stats(train_stats, args.output_dir + '/train_stats.pkl')
@@ -56,5 +56,5 @@ if __name__ == "__main__":
         for k, v in sorted(vars(args).items()):
             f.write('{}: {}\n'.format(k, v))
         f.write('test_loss: {:.5f}\n'.format(test_loss))
-        f.write('test_acc: {:.2f}\n'.format(test_acc))
+        f.write('test_acc: {:.5f}\n'.format(test_acc))
     print('Ok')

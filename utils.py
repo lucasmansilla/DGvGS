@@ -7,15 +7,15 @@ import itertools as it
 from gradient_surgery import compute_agr_mask
 
 
-def save_train_stats(train_stats, file_path):
+def save_train_stats(stats, file_path):
     with open(file_path, 'wb') as f:
-        pickle.dump(train_stats, f)
+        pickle.dump(stats, f)
 
 
 def load_train_stats(file_path):
     with open(file_path, 'rb') as f:
-        train_stats = pickle.load(f)
-    return train_stats
+        stats = pickle.load(f)
+    return stats
 
 
 def plot_train_stats(stats, path):

@@ -1,4 +1,5 @@
 import torch
+import time
 
 from networks import AlexNet
 from dataloader import InfiniteDataLoader
@@ -66,9 +67,13 @@ class ModelDA:
         max_val_acc = -1
 
         for it in range(iterations):
+            train_it_time = time.time()
+
             # Training
             train_batches = [self._prepare_batch(batch) for batch in next(train_iterator)]
             train_loss, train_acc = self._train_step(train_batches)
+
+            train_it_time = time.time() - train_it_time
             run_train_loss += train_loss
             run_train_acc += train_acc
 
@@ -98,9 +103,10 @@ class ModelDA:
                 # Print stats
                 print(f'\titer {it+1:>5}/{iterations}: '
                       f'train loss: {run_train_loss:.5f}, '
-                      f'train acc: {run_train_acc:>6.2f}% | '
+                      f'train acc: {run_train_acc:.5f} | '
                       f'val loss: {val_loss:.5f}, '
-                      f'val acc: {val_acc:>6.2f}%')
+                      f'val acc: {val_acc:.5f} | '
+                      f'iter time (sec): {train_it_time:.5f}')
 
                 run_train_loss, run_train_acc = 0.0, 0.0
 
@@ -119,7 +125,7 @@ class ModelDA:
 
             predictions = torch.max(outputs, 1)[1]
             train_loss = loss.item()
-            train_acc = (predictions == targets).float().mean().item() * 100
+            train_acc = (predictions == targets).float().mean().item()
 
         self.optimizer.step()
 
@@ -143,13 +149,14 @@ class ModelDA:
                 val_acc += (predictions == targets).sum().item()
 
         val_loss /= len(self.val_loader.dataset)
-        val_acc /= len(self.val_loader.dataset) / 100
+        val_acc /= len(self.val_loader.dataset)
 
         return val_loss, val_acc
 
     def test(self):
         is_train = False
         test_loss, test_acc = 0.0, 0.0
+
         self.network.train(is_train)
         self.network.load_state_dict(torch.load(self.args.output_dir + '/best_model.pt'))
 
@@ -165,7 +172,7 @@ class ModelDA:
                 test_acc += (predictions == targets).sum().item()
 
         self.stats['loss']['test'] = test_loss / len(self.test_loader.dataset)
-        self.stats['acc']['test'] = test_acc / len(self.test_loader.dataset) * 100
+        self.stats['acc']['test'] = test_acc / len(self.test_loader.dataset)
 
     def get_train_stats(self):
         return self.stats
@@ -202,11 +209,11 @@ class ModelGS(ModelDA):
 
                 self.optimizer.zero_grad()
 
-        train_loss /= len(train_batches)
-        train_acc /= len(train_batches)
-
         new_grads = self.grad_fn(domain_grads)  # Modify gradients according to grad_fn
         self.network.set_grads(new_grads)       # Update gradients
         self.optimizer.step()                   # Update model parameters
+
+        train_loss /= len(train_batches)
+        train_acc /= len(train_batches)
 
         return train_loss, train_acc
