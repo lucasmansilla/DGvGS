@@ -6,7 +6,7 @@ This repository contains the source code corresponding to the paper "Domain Gene
 ## Instructions
 This project uses Python 3.6.9 and PyTorch 1.8.1.
 ### Data:
-1. Download [PACS](https://drive.google.com/uc?id=0B6x7gtvErXgfbF9CSk53UkRxVzg) (Li et al., 2017), [VLCS](https://drive.google.com/uc?id=1skwblH1_okBwxWxmRsp9_qi15hyPpxg8) (Fang et al., 2013) and [Office-Home](https://drive.google.com/uc?id=0B81rNlvomiwed0V1YUxQdC1uOTg) (Venkateswara et al., 2017) datasets.
+1. Download [PACS](https://drive.google.com/uc?id=1JFr8f805nMUelQWWmfnJR3y4_SYoN5Pd) (Li et al., 2017), [VLCS](https://drive.google.com/uc?id=1skwblH1_okBwxWxmRsp9_qi15hyPpxg8) (Fang et al., 2013) and [Office-Home](https://drive.google.com/uc?id=0B81rNlvomiwed0V1YUxQdC1uOTg) (Venkateswara et al., 2017) datasets.
 2. Put the data of each dataset into a folder named `orig`, inside a parent folder named `data`. For example: `/path/to/DGvGS/data/orig/PACS`.
 3. Run the `run_pre.sh` script to resize the images and generate the training, validation and test splits.
 
