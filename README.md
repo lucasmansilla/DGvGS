@@ -24,7 +24,7 @@ python train_all.py --data_dir=data/pre --output_dir=result/train_all --dataset=
 ```
 will run Deep-All on PACS and save the results in `/path/to/DGvGS/result/train_all`.
 
-## Reference:
+## Reference
 - Mansilla, L., Echeveste, R., Milone, D. H., & Ferrante, E. (2021). Domain generalization via gradient surgery. In Proceedings of the IEEE/CVF International Conference on Computer Vision (pp. 6630-6638).
 
 ## License
