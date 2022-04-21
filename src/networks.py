@@ -4,10 +4,10 @@ import torchvision.models
 
 class AlexNet(torch.nn.Module):
 
-    def __init__(self, n_classes):
+    def __init__(self, num_classes, use_pretrained=False):
         super().__init__()
-        self.network = torchvision.models.alexnet(pretrained=True)
-        self.network.classifier[6] = torch.nn.Linear(4096, n_classes)
+        self.network = torchvision.models.alexnet(pretrained=use_pretrained)
+        self.network.classifier[6] = torch.nn.Linear(4096, num_classes)
 
     def forward(self, x):
         return self.network(x)
