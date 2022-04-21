@@ -1,5 +1,5 @@
 # Domain Generalization via Gradient Surgery
-This repository contains the source code corresponding to the paper "Domain Generalization via Gradient Surgery" (ICCV 2021). To learn more about our work, please visit this link: https://arxiv.org/abs/2108.01621
+This repository contains the source code corresponding to the paper "Domain Generalization via Gradient Surgery" (ICCV 2021). You can read our paper from [here](https://arxiv.org/abs/2108.01621).
 
 <p align="center"><img width="550" src="grad_surgery.png"></p>
 
@@ -7,9 +7,8 @@ This repository contains the source code corresponding to the paper "Domain Gene
 This project uses Python 3.8.10 and PyTorch 1.10.0.
 
 ### Data:
-1. Download datasets: [PACS](https://drive.google.com/uc?id=1JFr8f805nMUelQWWmfnJR3y4_SYoN5Pd) (Li et al., 2017), [VLCS](https://drive.google.com/uc?id=1skwblH1_okBwxWxmRsp9_qi15hyPpxg8) (Fang et al., 2013) and [Office-Home](https://drive.google.com/uc?id=0B81rNlvomiwed0V1YUxQdC1uOTg) (Venkateswara et al., 2017).
-2. Put data in `data/raw`.
-3. Resize images and generate training, validation and test splits. Run `./00_prepare_data.sh` after installing the project environment (instructions below).
+1. Download the [PACS](https://drive.google.com/uc?id=1JFr8f805nMUelQWWmfnJR3y4_SYoN5Pd) (Li et al., 2017), [VLCS](https://drive.google.com/uc?id=1skwblH1_okBwxWxmRsp9_qi15hyPpxg8) (Fang et al., 2013) and [Office-Home](https://drive.google.com/uc?id=0B81rNlvomiwed0V1YUxQdC1uOTg) (Venkateswara et al., 2017) datasets and put them in `data/raw/`.
+2. Resize images and generate training, validation and test splits. Run `./00_prepare_data.sh` after installing the project environment (instructions below).
 
 
 ### Project environment:
@@ -23,7 +22,11 @@ To run simulations across all datasets (PACS, VLCS and Office-Home) and methods 
 
 If you want to run a particular combination of dataset and method, use the `train_model.py` script. For example, the following instruction: 
 ```
-python scripts/train_model.py --data_dir=data/processed --results_dir=results/train --dataset=PACS --method=deep-all
+python scripts/train_model.py \
+    --data_dir=data/processed \
+    --results_dir=results/train \
+    --dataset=PACS \
+    --method=deep-all
 ```
 will run Deep-All on PACS and save the results in `results/train`.
 
