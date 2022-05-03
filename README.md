@@ -1,5 +1,5 @@
 # Domain Generalization via Gradient Surgery
-This repository contains the source code corresponding to the paper "Domain Generalization via Gradient Surgery" (ICCV 2021). You can read our paper from [here](https://arxiv.org/abs/2108.01621).
+This repository contains the source code corresponding to the paper "Domain Generalization via Gradient Surgery" (ICCV 2021). You can check out our paper here: https://arxiv.org/abs/2108.01621.
 
 <p align="center"><img width="550" src="grad_surgery.png"></p>
 
